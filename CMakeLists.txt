@@ -180,24 +180,25 @@ find_anyproject(GEOS REQUIRED)
 find_anyproject(NUMPY REQUIRED)
 
 # config setupext.py
-if(OSX_FRAMEWORK)
-
-    macro(get_lib_path_from_include PATH LIB_DIR)
+set(GEOS_LIBRARY_DIR)
+if(OSX_FRAMEWORK)    
+    macro(get_lib_path_from_include PATH)
         get_filename_component(FW_DIR ${PATH} PATH)
-        get_filename_component(${LIB_DIR} ${FW_DIR} PATH)
+        get_filename_component(GEOS_LIBRARY_DIR ${FW_DIR} PATH)
     endmacro()
 
     set(GEOS_FRAMEWORK geos)
-    get_lib_path_from_include(${GEOS_INCLUDE_DIRS} GEOS_LIBRARY_DIR)
+    get_lib_path_from_include(${GEOS_INCLUDE_DIRS})
     set(GEOS_FRAMEWORK_DIRS ${GEOS_LIBRARY_DIR})
 elseif(WIN32)
-    macro(get_lib_path_from_include PATH LIB_DIR)
+    macro(get_lib_path_from_include PATH)
         get_filename_component(FW_DIR ${PATH} PATH)
-        set(${LIB_DIR} "${FW_DIR}/lib")
+        set(GEOS_LIBRARY_DIR "${FW_DIR}/lib")
     endmacro()
-
-    get_lib_path_from_include(${GEOS_INCLUDE_DIRS} GEOS_LIBRARY_DIR)
+    get_lib_path_from_include(${GEOS_INCLUDE_DIRS})
 endif()
+
+list(REMOVE_DUPLICATES GEOS_INCLUDE_DIRS)
 
 configure_file(${CMAKE_SOURCE_DIR}/cmake/setup.py.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${OUT_DIR_NAME}/setup.py IMMEDIATE @ONLY)
 
