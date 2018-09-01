@@ -181,7 +181,7 @@ find_anyproject(NUMPY REQUIRED)
 
 # config setupext.py
 set(GEOS_LIBRARY_DIR)
-if(OSX_FRAMEWORK)    
+if(OSX_FRAMEWORK)
     macro(get_lib_path_from_include PATH)
         get_filename_component(FW_DIR ${PATH} PATH)
         get_filename_component(GEOS_LIBRARY_DIR ${FW_DIR} PATH)
@@ -201,6 +201,7 @@ endif()
 list(REMOVE_DUPLICATES GEOS_INCLUDE_DIRS)
 
 configure_file(${CMAKE_SOURCE_DIR}/cmake/setup.py.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${OUT_DIR_NAME}/setup.py IMMEDIATE @ONLY)
+configure_file(${CMAKE_SOURCE_DIR}/cmake/geos.py.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${OUT_DIR_NAME}/shapely/geos.py COPYONLY)
 
 # python setup.py install --prefix=/usr/local
 
