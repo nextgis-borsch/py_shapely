@@ -177,7 +177,7 @@ endif()
 
 include(FindAnyProject)
 find_anyproject(GEOS REQUIRED)
-find_anyproject(NUMPY REQUIRED)
+# find_anyproject(NUMPY REQUIRED)
 
 # config setupext.py
 set(GEOS_LIBRARY_DIR)
@@ -201,7 +201,8 @@ endif()
 list(REMOVE_DUPLICATES GEOS_INCLUDE_DIRS)
 
 configure_file(${CMAKE_SOURCE_DIR}/cmake/setup.py.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${OUT_DIR_NAME}/setup.py IMMEDIATE @ONLY)
-configure_file(${CMAKE_SOURCE_DIR}/cmake/geos.py.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${OUT_DIR_NAME}/shapely/geos.py COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/cmake/_buildcfg.py.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${OUT_DIR_NAME}/shapely/_buildcfg.py IMMEDIATE @ONLY)
+file(REMOVE ${CMAKE_CURRENT_BINARY_DIR}/${OUT_DIR_NAME}/shapely/speedups/_speedups.c)
 
 # python setup.py install --prefix=/usr/local
 
